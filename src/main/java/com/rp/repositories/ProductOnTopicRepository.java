@@ -1,10 +1,9 @@
 package com.rp.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
-
 import com.rp.data.ProductOnTopic;
+import org.springframework.stereotype.Repository;
 
-public interface ProductOnTopicRepository  extends JpaRepository<ProductOnTopic, Integer>{
+@Repository
+public interface ProductOnTopicRepository extends BaseRepository<ProductOnTopic, Integer> {
 
 }

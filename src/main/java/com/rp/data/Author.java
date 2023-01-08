@@ -1,63 +1,57 @@
 package com.rp.data;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Retry.Topic;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.rp.controller.CommentOnTopicController;
-import com.rp.services.CommentOnTopicService;
+import javax.persistence.*;
+import java.util.Date;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 @Getter
 @Setter
-@Builder
 @Entity
 @Table
-@EqualsAndHashCode(exclude = {"id","topicPages"})
+@EqualsAndHashCode(exclude = {"id"})
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"topicPages"})
+@ToString
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Author {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private String fullName;
-	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-	private List<TopicPage> topicPages;
-	private String introduction;
-	private String email;
-	@UpdateTimestamp
-	private Date LastUpdate; 
-	@CreationTimestamp
-	@Column(updatable = false)
-	private Date createdDate;
-	public Author(String fullName, List<TopicPage> topicPages, String introduction, String email) {
-		super();
-		this.fullName = fullName;
-		this.topicPages = topicPages;
-		this.introduction = introduction;
-		this.email = email;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String fullName;
+//	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE},mappedBy = "author") 
+//	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//	private List<TopicPage> topicPages = new ArrayList<>();
+
+    @Column( columnDefinition="LONGTEXT" )
+    private String introduction;
+    private String email;
+    @UpdateTimestamp
+    private Date LastUpdate;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Date createdDate;
+
+    public Author(String fullName, String introduction, String email) {
+
+        this.fullName = fullName;
+//		this.topicPages = topicPages;
+        this.introduction = introduction;
+        this.email = email;
+    }
+//	public void addTopicPages(TopicPage tp1) {
+//		tp1.setAuthor(this);
+//		this.topicPages.add(tp1);
+//	}
+//	public void removeTopicPages(TopicPage tp1) {
+//		this.topicPages.remove(tp1);
+//		tp1.setAuthor(null);
+//	}
+// 
 }

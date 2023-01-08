@@ -1,36 +1,40 @@
 package com.rp.services;
 
-import java.util.List;
-
+import com.rp.data.Topic;
+import com.rp.repositories.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rp.data.TopicPage;
-import com.rp.repositories.TopicPageRepository;
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
+@Transactional
 public class TopicService {
-@Autowired
-private TopicPageRepository topicPageRepository;
-	public List<TopicPage> findAll() {
-		// TODO Auto-generated method stub
-		return topicPageRepository.findAll();
-	}
-	public TopicPage findbyId(int id) {
-		return topicPageRepository.findById(id).get();
-	}
-	public TopicPage updateById(int id,TopicPage topicPage) {
-		TopicPage topicPageDb = topicPageRepository.findById(id).get();
-		topicPageDb = topicPage;
-		topicPageDb.setId(id);
-		return topicPageRepository.save(topicPageDb);
-	}
-	public TopicPage create(TopicPage topicPage) {
-		return topicPageRepository.save(topicPage);
-	}
-	public List<TopicPage> getAlltopicPagesByAuthorId(Integer id){
-		return topicPageRepository.findAllTopicPageByAuthorId(id);
-	}
+    @Autowired
+    private TopicRepository topicRepository;
+
+    public List<Topic> findAll() {
+        // TODO Auto-generated method stub
+        return topicRepository.findAll();
+    }
+
+    public Topic findbyId(int id) {
+        return topicRepository.findById(id).get();
+    }
+
+    public Topic updateById(int id, Topic topic) {
+        Topic topicDb = topicRepository.findById(id).get();
+        topicDb = topic;
+        topicDb.setId(id);
+        return topicRepository.save(topicDb);
+    }
+
+    public Topic save(Topic topic) {
+        return topicRepository.save(topic);
+    }
+
+    public void delete(Topic topic) {
+        topicRepository.delete(topic);
+    }
 }
-
-

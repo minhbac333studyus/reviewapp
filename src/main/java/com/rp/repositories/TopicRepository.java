@@ -1,10 +1,9 @@
 package com.rp.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.rp.data.Topic;
 import org.springframework.stereotype.Repository;
 
-import com.rp.data.Topic;
 @Repository
-public interface TopicRepository extends JpaRepository<Topic, Integer>{
+public interface TopicRepository extends BaseRepository<Topic, Integer> {
 
 }

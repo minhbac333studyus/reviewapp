@@ -1,42 +1,40 @@
 package com.rp.services;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
+import com.rp.data.CommentOnTopicPage;
+import com.rp.repositories.CommentOnTopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.rp.data.CommentOnTopic; 
-import com.rp.repositories.CommentOnTopicRepository;
+import javax.validation.Valid;
 
 @Service
 public class CommentOnTopicService {
 	@Autowired
 	private CommentOnTopicRepository commentOnTopicRepository;
 
-	public List<CommentOnTopic> findAll() {
+	public Page<CommentOnTopicPage> findAll(Pageable page) {
 		// TODO Auto-generated method stub
-		return commentOnTopicRepository.findAll();
+		return commentOnTopicRepository.findAll(page);
 	}
+		public CommentOnTopicPage create (CommentOnTopicPage commentOnTopic){
+			// TODO Auto-generated method stub
+			commentOnTopicRepository.save(commentOnTopic);
+			return commentOnTopic;
+		}
 
-	public CommentOnTopic create(@Valid CommentOnTopic commentOnTopic) {
-		// TODO Auto-generated method stub
-		commentOnTopicRepository.save(commentOnTopic);
-		return commentOnTopic;
+		public CommentOnTopicPage updateById (Integer id, @Valid CommentOnTopicPage commentOnTopic){
+			// TODO Auto-generated method stub
+			CommentOnTopicPage commentOnTopicDb = commentOnTopicRepository.findById(id).get();
+			commentOnTopicDb = commentOnTopic;
+			commentOnTopicDb.setId(id);
+			return commentOnTopicRepository.save(commentOnTopicDb);
+		}
+
+		public CommentOnTopicPage findbyId (Integer id){
+			// TODO Auto-generated method stub
+			return commentOnTopicRepository.findById(id).get();
+		}
+
 	}
-
-	public CommentOnTopic updateById(Integer id, @Valid CommentOnTopic commentOnTopic) {
-		// TODO Auto-generated method stub
-		CommentOnTopic commentOnTopicDb = commentOnTopicRepository.findById(id).get();
-		commentOnTopicDb = commentOnTopic;
-		commentOnTopicDb.setId(id);
-		return commentOnTopicRepository.save(commentOnTopicDb);
-	}
-
-	public CommentOnTopic findbyId(Integer id) {
-		// TODO Auto-generated method stub
-		return commentOnTopicRepository.findById(id).get();
-	}
-
-}
