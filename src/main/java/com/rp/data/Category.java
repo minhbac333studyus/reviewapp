@@ -1,7 +1,9 @@
 package com.rp.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,7 +32,7 @@ public class Category {
     private int id;
     private String name;
     @OneToMany(targetEntity = Topic.class, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, mappedBy = "category")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonManagedReference
     private List<Topic> topics = new ArrayList<>();
 
     @UpdateTimestamp

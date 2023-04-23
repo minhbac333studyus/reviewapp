@@ -1,7 +1,9 @@
 package com.rp.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,10 +16,10 @@ import java.util.Date;
 @Setter
 @Entity
 @Table
-@EqualsAndHashCode(exclude = {"id", "category", "topicPages"})
+@EqualsAndHashCode(exclude = {"id", "category"})
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"category", "topicPages"})
+@ToString(exclude = {"category" })
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Topic {
     @Id
@@ -27,7 +29,7 @@ public class Topic {
 
     @ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "category_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonBackReference
     private Category category;
 
     @UpdateTimestamp

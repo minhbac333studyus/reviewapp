@@ -1,8 +1,11 @@
 package com.rp.services;
 
+import com.rp.data.Category;
 import com.rp.data.Topic;
 import com.rp.repositories.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,11 +16,15 @@ import java.util.List;
 public class TopicService {
     @Autowired
     private TopicRepository topicRepository;
-
-    public List<Topic> findAll() {
-        // TODO Auto-generated method stub
-        return topicRepository.findAll();
-    }
+//
+//    public List<Topic> findAll() {
+//        // TODO Auto-generated method stub
+//        return topicRepository.findAll();
+//    }
+	public Page<Topic> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return topicRepository.findAll(pageable);
+	}
 
     public Topic findbyId(int id) {
         return topicRepository.findById(id).get();
